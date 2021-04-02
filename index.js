@@ -1,3 +1,4 @@
+
 require("dotenv").config();
 const express = require("express");
 const bodyParser = require("body-parser");
@@ -16,9 +17,9 @@ app.use(express.static(__dirname + "/public"));
 if(process.env.NODE_ENV==='production'){
   app.use(express.static('client/build'));
 
-  app.get('/',(req,res)=>{
+  app.get('*',(req,res)=>{
 
-    res.send("Hello to ladonna.api");
+    res.sendFile(path.resolve(__dirname,'client','build','index.html'));
   })
 }
 
@@ -35,13 +36,18 @@ app.use(
 );
 app.use(fileUpload());
 
+const CONNECTION_URL =
+  "mongodb+srv://ladonna:ladonna3623@cluster0.5vnmn.mongodb.net/myFirstDatabase?retryWrites=true&w=majority";
+
 const Schema = mongoose.Schema;
 
-mongoose.connect(process.env.BAGLANTI, {
+mongoose.connect(CONNECTION_URL, {
   useNewUrlParser: true,
   useUnifiedTopology: true,
-});
-mongoose.set("useCreateIndex", true);
+}).then(()=>app.listen(PORT,()=>console.log(`Server running: ${PORT}`)))
+.catch((error)=>console.log(error.message));
+
+mongoose.set("useFindAndModify",false);
 app.use(
   session({
     secret: "Techproeducation - WebDeveloper",
