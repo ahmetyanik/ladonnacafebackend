@@ -55,7 +55,7 @@ app.use(
 app.use(passport.initialize());
 app.use(passport.session());
 
-///////// MONGODB ŞEMALARI - BAŞLANGIÇ
+///////// MONGODB ŞEMALARI - BAŞLANGIÇ////
 const urunSema = {
   isim: String,
   kategori: String,
