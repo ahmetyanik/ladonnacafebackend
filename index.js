@@ -1,4 +1,3 @@
-
 require("dotenv").config();
 const express = require("express");
 const bodyParser = require("body-parser");
@@ -36,18 +35,13 @@ app.use(
 );
 app.use(fileUpload());
 
-const CONNECTION_URL =
-  "mongodb+srv://ladonna:ladonna3623@cluster0.5vnmn.mongodb.net/myFirstDatabase?retryWrites=true&w=majority";
-
 const Schema = mongoose.Schema;
 
-mongoose.connect(CONNECTION_URL, {
+mongoose.connect(process.env.BAGLANTI, {
   useNewUrlParser: true,
   useUnifiedTopology: true,
-}).then(()=>app.listen(PORT,()=>console.log(`Server running: ${PORT}`)))
-.catch((error)=>console.log(error.message));
-
-mongoose.set("useFindAndModify",false);
+});
+mongoose.set("useCreateIndex", true);
 app.use(
   session({
     secret: "Techproeducation - WebDeveloper",
